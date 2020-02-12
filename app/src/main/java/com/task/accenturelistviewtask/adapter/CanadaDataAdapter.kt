@@ -19,7 +19,7 @@ class CanadaDataAdapter(private val context : Context) :
 
     fun setCanadaDataList(list: List<Row>){
         this.list = list
-        notifyDataSetChanged()
+        notifyDataSetChanged()                  //update the list with latest data
     }
 
 
@@ -34,14 +34,13 @@ class CanadaDataAdapter(private val context : Context) :
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return list.size                        //return list size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.title.text = list[position].title
         holder.description.text = list[position].description
-        Glide.with(context).asDrawable().load(list[position].imageHref).into(holder.image)
-        //Picasso.get().load(list[position].imageHref).into(holder.image)
+        Glide.with(context).asDrawable().load(list[position].imageHref).into(holder.image)   //load image using glide
     }
 
 

@@ -20,31 +20,41 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportActionBar?.title = ""
+        init()
 
-        id_swipeRefresh.isRefreshing = true
-        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-        id_recyclerView.layoutManager = LinearLayoutManager(this)
         id_swipeRefresh.setOnRefreshListener {
-            viewModel.fetchCanadaData()
-            id_swipeRefresh.isRefreshing = false
+            fetchData()                            // Update list by calling API
         }
 
-        /*viewModel.showProgress.observe(this, Observer {
-
-        })*/
-
         viewModel.canadaData.observe(this, Observer {
-            supportActionBar?.title = it.title
+            supportActionBar?.title = it.title      /** default parameter CanadaDataModel referred as it */
             adapter.setCanadaDataList(it.rows)
-            id_swipeRefresh.isRefreshing = false
+            id_swipeRefresh.isRefreshing = false   //hide progress bar after updating the data
         })
 
+        initialiseAdapter()
+
+    }
+
+    fun init(){
+
+        supportActionBar?.title = ""             // Set actionbar title before API call
+        id_swipeRefresh.isRefreshing = true     // Show swiperefresh layout progress bar
+
+        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)   //ViewModel reference
+
+        id_recyclerView.layoutManager = LinearLayoutManager(this)        // Set LayoutManager for RecyclerView
+
+        fetchData()
+    }
+
+    fun fetchData(){
         viewModel.fetchCanadaData()
+    }
+
+    fun initialiseAdapter(){
         adapter = CanadaDataAdapter(this)
         id_recyclerView.adapter = adapter
-
-
     }
 
 }

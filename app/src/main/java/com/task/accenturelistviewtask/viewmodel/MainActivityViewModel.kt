@@ -9,20 +9,14 @@ import com.task.accenturelistviewtask.repository.MainActivityRepository
 class MainActivityViewModel(application:Application) : AndroidViewModel(application){
 
     private val repository = MainActivityRepository(application)
-    val showProgress : LiveData<Boolean>
     val canadaData : LiveData<CanadaDataModel>
 
     init {
-        this.showProgress = repository.showProgress
         this.canadaData = repository.canadaData
     }
 
-    /*fun changeState(){
-        repository.changeState()
-    }*/
-
     fun fetchCanadaData(){
-        repository.fetchCanadaData()
+        repository.fetchCanadaData()   // Call API from Repository
     }
 
 }
