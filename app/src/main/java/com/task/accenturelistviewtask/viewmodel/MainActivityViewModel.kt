@@ -10,9 +10,11 @@ class MainActivityViewModel(application:Application) : AndroidViewModel(applicat
 
     private val repository = MainActivityRepository(application)
     val canadaData : LiveData<CanadaDataModel>
+    val progressBar : LiveData<Boolean>
 
     init {
         this.canadaData = repository.canadaData
+        this.progressBar = repository.progressBar
     }
 
     fun fetchCanadaData(){

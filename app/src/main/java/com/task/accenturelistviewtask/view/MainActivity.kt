@@ -26,6 +26,12 @@ class MainActivity : AppCompatActivity() {
             fetchData()                            // Update list by calling API
         }
 
+        viewModel.progressBar.observe(this, Observer {
+            if(it){
+                id_swipeRefresh.isRefreshing = false
+            }
+        })
+
         viewModel.canadaData.observe(this, Observer {
             supportActionBar?.title = it.title      /** default parameter CanadaDataModel referred as it */
             adapter.setCanadaDataList(it.rows)
